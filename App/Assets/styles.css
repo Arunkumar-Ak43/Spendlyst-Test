@@ -1,0 +1,107 @@
+/* Basic layout */
+body {
+  margin: 0;
+  font-family: Poppins, sans-serif;
+  background: #f6f6ff;
+}
+
+.app-header {
+  background: #8e44ad;
+  color: #fff;
+  padding: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.main-content {
+  padding: 1rem;
+  padding-bottom: 80px;
+}
+
+/* Tabs */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Cards */
+.card {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px #00000015;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+  color: #8e44ad;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  margin-bottom: 0.75rem;
+}
+
+/* Overview */
+.financial-overview {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.overview-card {
+  text-align: center;
+}
+
+.amount {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Forms */
+input {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 0.7rem;
+}
+
+.btn {
+  background: #f39c12;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Empty state */
+.empty-state {
+  padding: 1rem;
+  text-align: center;
+  color: #888;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 0.6rem 0;
+  border-top: 1px solid #ddd;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: #777;
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+.nav-item.active {
+  color: #f39c12;
+}
