@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Spendlyst - Test Version</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="app-layout">
+    <header class="app-header">
+      <div class="logo">
+        <span>Spendlyst (Test)</span>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bottom-nav">
+      <a href="#" class="nav-item active" data-tab="tracker">
+        <i data-feather="activity"></i><span>Tracker</span>
+      </a>
+      <a href="#" class="nav-item" data-tab="incomes">
+        <i data-feather="trending-up"></i><span>Incomes</span>
+      </a>
+      <a href="#" class="nav-item" data-tab="expenses">
+        <i data-feather="trending-down"></i><span>Expenses</span>
+      </a>
+    </nav>
+
+    <main class="main-content">
+
+      <!-- Tracker Page -->
+      <section id="tracker" class="tab-content active">
+        <h2>Daily Tracker</h2>
+
+        <div class="financial-overview">
+          <div class="overview-card card">
+            <h4>Total Income</h4>
+            <p class="amount">₹0.00</p>
+          </div>
+          <div class="overview-card card">
+            <h4>Total Expenses</h4>
+            <p class="amount">₹0.00</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Transactions</h3>
+          <div class="empty-state">
+            <p>No transactions yet.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Incomes Page -->
+      <section id="incomes" class="tab-content">
+        <h2>Incomes</h2>
+
+        <div class="card">
+          <h3>Add Income</h3>
+          <form onsubmit="return false;">
+            <label>Source</label>
+            <input type="text" placeholder="Paycheck" />
+
+            <label>Amount</label>
+            <input type="number" placeholder="0.00" />
+
+            <button class="btn">Add Income</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>Income History</h3>
+          <div class="empty-state">No income added yet.</div>
+        </div>
+      </section>
+
+      <!-- Expenses Page -->
+      <section id="expenses" class="tab-content">
+        <h2>Expenses</h2>
+
+        <div class="card">
+          <h3>Add Expense</h3>
+          <form onsubmit="return false;">
+            <label>Amount</label>
+            <input type="number" placeholder="0.00" />
+
+            <label>Comment</label>
+            <input type="text" placeholder="Groceries" />
+
+            <button class="btn">Add Expense</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>Recent Expenses</h3>
+          <div class="empty-state">No expenses yet.</div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
