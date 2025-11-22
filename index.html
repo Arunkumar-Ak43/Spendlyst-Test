@@ -1,108 +1,538 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Spendlyst - Test Version</title>
 
-  <link rel="stylesheet" href="App/Assets/styles.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Spendlyst - Your Financial Harmony</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <div class="app-layout">
-    <header class="app-header">
-      <div class="logo">
-        <span>Spendlyst (Test)</span>
-      </div>
-    </header>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="app-header-logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 3L29 10L16 17L3 10L16 3Z" fill="url(#mainGradient)" stroke="white" stroke-width="2" />
+                    <path d="M16 17L29 24L16 31L3 24L16 17Z" fill="url(#mainGradient)" stroke="white" stroke-width="2" />
+                    <path d="M3 10L3 24L16 31L16 17L3 10Z" fill="url(#mainGradient)" opacity="0.8" />
+                    <path d="M29 10L29 24L16 31L16 17L29 10Z" fill="url(#mainGradient)" opacity="0.8" />
+                    <defs>
+                        <linearGradient id="mainGradient" x1="3" y1="3" x2="29" y2="31" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#f39c12" />
+                            <stop offset="1" stop-color="#8e44ad" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Spendlyst</span>
+            </div>
+            <button id="darkModeToggle" aria-label="Toggle Dark Mode">
+                <i data-feather="moon"></i>
+            </button>
+        </header>
 
-    <!-- Navigation -->
-    <nav class="bottom-nav">
-      <a href="#" class="nav-item active" data-tab="tracker">
-        <i data-feather="activity"></i><span>Tracker</span>
-      </a>
-      <a href="#" class="nav-item" data-tab="incomes">
-        <i data-feather="trending-up"></i><span>Incomes</span>
-      </a>
-      <a href="#" class="nav-item" data-tab="expenses">
-        <i data-feather="trending-down"></i><span>Expenses</span>
-      </a>
-    </nav>
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active" data-tab="tracker">
+                <i data-feather="activity"></i>
+                <span>Tracker</span>
+            </a>
+            <a href="#" class="nav-item" data-tab="incomes">
+                <i data-feather="trending-up"></i>
+                <span>Incomes</span>
+            </a>
+            <a href="#" class="nav-item" data-tab="expenses">
+                <i data-feather="trending-down"></i>
+                <span>Expenses</span>
+            </a>
+            <a href="#" class="nav-item" data-tab="categories">
+                <i data-feather="tag"></i>
+                <span>Categories</span>
+            </a>
+            <a href="#" class="nav-item" data-tab="statistics">
+                <i data-feather="bar-chart-2"></i>
+                <span>Statistics</span>
+            </a>
+             <a href="#" class="nav-item" data-tab="notepad"><i data-feather="edit"></i><span>Notepad</span></a>
+            <a href="#" class="nav-item" data-tab="settings">
+                <i data-feather="settings"></i>
+                <span>Settings</span>
+            </a>
+            <!-- About tab removed from main nav and moved to settings -->
+        </nav>
 
-    <main class="main-content">
+        
 
-      <!-- Tracker Page -->
-      <section id="tracker" class="tab-content active">
-        <h2>Daily Tracker</h2>
 
-        <div class="financial-overview">
-          <div class="overview-card card">
-            <h4>Total Income</h4>
-            <p class="amount">₹0.00</p>
-          </div>
-          <div class="overview-card card">
-            <h4>Total Expenses</h4>
-            <p class="amount">₹0.00</p>
-          </div>
+        <main class="main-content">
+            <div class="quote-rotator" id="quoteRotator">
+                Every rupee saved is a step toward freedom.
+            </div>
+
+            <section id="tracker" class="tab-content active">
+                <h2>
+                    <span class="animated-tab-logo logo-tracker">
+                        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="6" y="4" width="20" height="24" rx="2" class="page" />
+                            <path d="M8 8h16M8 12h12M8 16h16M8 20h12M8 24h16" class="lines" />
+                            <path d="M16 10L16 22M12 14L20 14" stroke="var(--accent-highlight)" stroke-width="2"
+                                class="rupee-symbol" />
+                            <circle cx="16" cy="16" r="2" fill="var(--accent-highlight)" opacity="0.3"
+                                class="rupee-symbol-dot" />
+                        </svg>
+                    </span>
+                    Daily Tracker
+                </h2>
+                <div class="financial-overview">
+                    <div class="overview-card">
+                        <div class="icon-wrapper"><i data-feather="arrow-down-circle"></i></div>
+                        <h4>Total Income</h4>
+                        <p class="amount" id="totalIncomeDisplay">₹0.00</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="icon-wrapper"><i data-feather="arrow-up-circle"></i></div>
+                        <h4>Total Expenses</h4>
+                        <p class="amount" id="totalExpensesDisplay">₹0.00</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="icon-wrapper"><i data-feather="briefcase"></i></div>
+                        <h4>Current Balance</h4>
+                        <p class="amount" id="remainingBalanceDisplay">₹0.00</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="icon-wrapper"><i data-feather="pie-chart"></i></div>
+                        <h4>Balance %</h4>
+                        <p class="percentage" id="remainingPercentageDisplay">(0%)</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>All Transactions</h3>
+                        <input type="text" id="searchAllExpenses" placeholder="Search transactions..." class="form-group"
+                            style="margin-bottom:0; max-width:180px; padding: 0.6rem; font-size:0.9rem; border-radius:var(--border-radius);">
+                    </div>
+                    <div id="allExpensesList" class="list-container">
+                        <div class="empty-state"><i data-feather="list"></i>
+                            <p>No transactions recorded yet.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Expenses by Category</h3>
+                    </div>
+                    <div id="expensesByCategory">
+                        <div class="empty-state"><i data-feather="tag"></i>
+                            <p>Define your categories first.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="incomes" class="tab-content">
+                <h2>
+                    <span class="animated-tab-logo logo-income">
+                        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#FFD700" />
+                                    <stop offset="50%" stop-color="#FFA500" />
+                                    <stop offset="100%" stop-color="#FFD700" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="16" cy="16" r="12" class="rupee-coin" />
+                            <path d="M13 10h6m-3 0v12m-3 0h6" stroke="white" stroke-width="1.5" />
+                            <rect x="0" y="0" width="10" height="32" class="shimmer" />
+                        </svg>
+                    </span>
+                    Incomes
+                </h2>
+                <div class="card">
+                    <h3><i data-feather="plus-circle" style="vertical-align:middle; margin-right:0.3rem; width:20px;"></i>Add
+                        New Income</h3>
+                    <form id="addIncomeForm">
+                        <div class="form-group">
+                            <label for="incomeSource">Source</label>
+                            <input type="text" id="incomeSource" required placeholder="e.g., Paycheck, Freelance">
+                        </div>
+                        <div class="form-group">
+                            <label for="incomeAmount">Amount (₹)</label>
+                            <input type="number" id="incomeAmount" step="0.01" min="0" required placeholder="0.00">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block"><i data-feather="check-circle"></i> Add
+                            Income</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3><i data-feather="list" style="vertical-align:middle; margin-right:0.3rem; width:20px;"></i>Income
+                        History</h3>
+                    <div id="incomeHistoryList" class="list-container">
+                        <div class="empty-state"><i data-feather="dollar-sign"></i>
+                            <p>No incomes recorded yet.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="expenses" class="tab-content">
+                <h2>
+                    <span class="animated-tab-logo logo-expenses">
+                        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="5" y="8" width="22" height="18" rx="2" class="register-body" />
+                            <rect x="8" y="11" width="16" height="4" rx="1" class="screen" />
+                            <path d="M10 18h2m0 0v2m0-2h-2" stroke="var(--text-primary)" stroke-width="1.5" />
+                            <path d="M20 18h2m0 0v2m0-2h-2" stroke="var(--text-primary)" stroke-width="1.5" />
+                            <rect x="13" y="22" width="6" height="3" rx="0.5" class="receipt" />
+                        </svg>
+                    </span>
+                    Expenses
+                </h2>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Log Your Expenses</h3>
+                        <select id="quickAddExpenseCategory" class="form-group"
+                            style="margin-bottom:0; max-width:150px; padding: 0.6rem; font-size:0.9rem; border-radius:var(--border-radius);">
+                        </select>
+                    </div>
+                    <form id="quickAddExpenseForm">
+                        <div class="form-group">
+                            <label for="quickExpenseAmount">Amount (₹)</label>
+                            <input type="number" id="quickExpenseAmount" step="0.01" min="0" required
+                                placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label for="quickExpenseComment">Comment (Optional)</label>
+                            <input type="text" id="quickExpenseComment" placeholder="e.g., Groceries, Rent">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block"><i data-feather="plus-circle"></i> Add
+                            Expense</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3>Recent Expenses</h3>
+                    <div id="recentExpensesList" class="list-container">
+                        <div class="empty-state"><i data-feather="shopping-cart"></i>
+                            <p>No expenses recorded today.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="categories" class="tab-content">
+                <h2>
+                    <span class="animated-tab-logo logo-categories">
+                        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 4L28 10L16 16L4 10L16 4Z" fill="var(--accent-highlight)" class="tag" />
+                            <path d="M16 16L28 22L16 28L4 22L16 16Z" fill="var(--accent-primary)" class="tag" />
+                            <path d="M16 10L16 22" stroke="white" stroke-width="1" />
+                            <text x="16" y="12" text-anchor="middle" fill="white" font-size="6" class="tag-text">TAGS
+                            </text>
+                        </svg>
+                    </span>
+                    Categories
+                </h2>
+                <div class="card">
+                    <h3><i data-feather="folder-plus" style="vertical-align:middle; margin-right:0.3rem; width:20px;"></i>Create
+                        New Category</h3>
+                    <form id="addCategoryForm">
+                        <div class="form-group">
+                            <label for="categoryName">Category Name</label>
+                            <input type="text" id="categoryName" required placeholder="e.g., Food, Transport">
+                        </div>
+                        <div class="form-group">
+                            <label for="categoryGoal">Target % of Income</label>
+                            <input type="number" id="categoryGoal" min="0" max="100" step="1" required
+                                placeholder="0-100">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block"><i data-feather="check-circle"></i> Add
+                            Category</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3><i data-feather="edit" style="vertical-align:middle; margin-right:0.3rem; width:20px;"></i>Manage
+                        Categories</h3>
+                    <p style="margin-bottom: 0.75rem; font-size: 0.9rem; color: var(--text-secondary);">Total Target:
+                        <strong id="totalGoalPercentageDisplay" style="color: var(--accent-primary);">0%</strong>
+                    </p>
+                    <div id="manageCategoriesList" class="list-container">
+                        <div class="empty-state"><i data-feather="tag"></i>
+                            <p>No categories defined yet.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="statistics" class="tab-content">
+                <h2>
+                    <span class="animated-tab-logo logo-statistics">
+                        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="16" cy="16" r="12" class="pie-base"/>
+                            <path d="M16 16 L16 4 A12 12 0 0 1 24 16 Z" fill="var(--accent-highlight)" class="pie-segment"/>
+                            <path d="M16 16 L24 16 A12 12 0 0 1 16 28 Z" fill="var(--accent-primary)" class="pie-segment"/>
+                            <path d="M16 16 L16 28 A12 12 0 0 1 8 16 Z" fill="var(--accent-secondary)"
+                                class="pie-segment" />
+
+                            <rect x="6" y="28" width="4" height="0" class="bar" fill="var(--accent-highlight)" />
+                            <rect x="14" y="28" width="4" height="0" class="bar" fill="var(--accent-primary)" />
+                            <rect x="22" y="28" width="4" height="0" class="bar" fill="var(--accent-secondary)" />
+                        </svg>
+                    </span>
+                    Statistics
+                </h2>
+                <div class="card">
+                    <h3>Category Spending Jars</h3>
+                    <div id="categoryJarsContainer" class="category-jars-container">
+                        <div class="empty-state" style="grid-column: 1 / -1;">
+                            <i data-feather="droplet"></i>
+                            <p>No categories defined to show spending jars.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Visual Reports</h3>
+                        <div style="display:flex; gap:0.5rem; display:none;">
+                            <button id="exportToExcelBtn" class="btn btn-secondary btn-sm" disabled><i
+                                    data-feather="file-text"></i> Excel</button>
+                            <button id="exportChartPdfBtn" class="btn btn-secondary btn-sm" disabled><i
+                                    data-feather="file"></i> PDF</button>
+                        </div>
+                    </div>
+                    <div class="charts-container">
+                        <div class="chart-wrapper">
+                            <h4>Expenses by Category (Bar)</h4>
+                            <canvas id="expensesByCategoryBarChart"></canvas>
+                            <p id="expensesByCategoryBarChartEmpty" class="empty-state"
+                                style="display:none; padding:0.5rem; font-size:0.8rem;">Not enough data for this chart.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="reports" class="tab-content">
+                <h2>
+                    <span class="animated-tab-logo logo-reports">
+                        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="6" y="4" width="20" height="24" rx="2" fill="var(--bg-surface)"
+                                stroke="var(--accent-primary)" stroke-width="1.5" class="paper-body" />
+                            <path d="M6 8h20M6 12h10M6 16h14M6 20h8" stroke="var(--border-color)" stroke-width="0.7"
+                                class="lines" />
+                            <path d="M26 4L22 8L26 12L26 4Z" fill="var(--bg-main)" stroke="var(--accent-primary)"
+                                stroke-width="0.7" class="fold" />
+                        </svg>
+                    </span>
+                    Reports
+                </h2>
+                <div class="card">
+                    <h3>Generate Custom Reports</h3>
+                    <div class="form-group">
+                        <label for="reportStartDate">Start Date</label>
+                        <input type="date" id="reportStartDate" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="reportEndDate">End Date</label>
+                        <input type="date" id="reportEndDate" class="form-control">
+                    </div>
+                    <div style="display:flex; gap:0.5rem; margin-bottom: 1rem;">
+                        <button id="generateReportBtn" class="btn btn-primary flex-grow"><i data-feather="file-text"></i>
+                            Generate Report</button>
+                        <button id="exportReportPdfBtn" class="btn btn-secondary flex-grow" disabled><i
+                                data-feather="file"></i> Export Report to PDF</button>
+                    </div>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <button id="getGoalPlanBtn" class="btn btn-primary" style="margin-top:1rem;">
+                        <i data-feather="target"></i> Financial Goal Planner ✨
+                    </button>
+                </div>
+                <div class="card">
+                    <h3>Generated Report</h3>
+                    <div id="generatedReportContent">
+                        <div class="empty-state"><i data-feather="clipboard"></i>
+                            <p>No report generated yet.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="settings" class="tab-content">
+                <h2>
+                    <span class="animated-tab-logo logo-settings">
+                        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="6" y="6" width="20" height="20" rx="2" fill="var(--accent-secondary)"
+                                stroke="var(--text-primary)" stroke-width="1.5" class="vault-body" />
+                            <rect x="10" y="10" width="12" height="12" rx="1" fill="var(--bg-surface)"
+                                stroke="var(--text-primary)" stroke-width="1" class="door" />
+                            <circle cx="16" cy="16" r="4" fill="var(--accent-highlight)" stroke="var(--text-primary)"
+                                stroke-width="0.7" class="dial" />
+                            <circle cx="16" cy="16" r="1" fill="var(--text-primary)" />
+                        </svg>
+                    </span>
+                    Settings & Backup
+                </h2>
+                <div class="card">
+                    <h3>Data Management</h3>
+                    <div class="form-group">
+                        <button id="resetMonthlyBtn" class="btn btn-danger btn-block"><i data-feather="refresh-cw"></i>
+                            Reset Current Month Data</button>
+                    </div>
+                    <div class="form-group">
+                        <button id="clearArchivedDataBtn" class="btn btn-danger btn-block"><i data-feather="archive"></i>
+                            Clear All Archived Data</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Archived Months</h3>
+                    <div id="archivedMonthsList" class="list-container">
+                        <div class="empty-state"><i data-feather="archive"></i>
+                            <p>No archived data yet.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>App Preferences</h3>
+                    <div class="form-group">
+                        <label for="resetDayOfMonth">Monthly Reset Day</label>
+                        <input type="number" id="resetDayOfMonth" min="1" max="31" value="1"
+                            class="form-control">
+                        <small style="font-size:0.8rem; color:var(--text-secondary);">Day of month to automatically
+                            reset expenses (e.g., 1 for the 1st).</small>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" id="enableAutoReset" style="margin-right: 0.5rem;">
+                        <label for="enableAutoReset" style="display: inline-block; margin-bottom: 0;">Enable Automatic Monthly Reset</label>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>About Spendlyst</h3>
+                    <p><strong>Spendlyst</strong> is your personal financial harmony tracker, designed to help you effortlessly manage your incomes and expenses. Keep track of where your money goes, set spending goals, and gain valuable insights into your financial health.</p>
+                    <p>This application aims to provide a simple, intuitive, and powerful tool for everyday financial management, empowering you to make smarter financial decisions.</p>
+                    <p><strong>Developer:</strong> Arun</p>
+                    <p><strong>Email:</strong> <a href="mailto:contact.arunofficial43@gmail.com" target="_blank">contact.arunofficial43@gmail.com</a></p>
+                    <p><strong>Github:</strong> <a href="https://github.com/Arunkumar-Ak43/Main" target="_blank">github.com/Arunkumar</a></p>
+                </div>
+            </section>
+             <section id="notepad" class="tab-content">
+                <h2>
+                    <span class="animated-tab-logo logo-tracker">
+                    </span>
+                    Notepad
+                </h2>
+                <div class="card">
+                    <div class="notepad-toolbar">
+                        <button id="notepad-bold-btn" class="notepad-tool-btn" title="Bold"><i data-feather="bold"></i></button>
+                        <button id="notepad-underline-btn" class="notepad-tool-btn" title="Underline"><i data-feather="underline"></i></button>
+                        <button id="notepad-italic-btn" class="notepad-tool-btn" title="Italic"><i data-feather="italic"></i></button>
+                        <button id="notepad-increase-font-btn" class="notepad-tool-btn" title="Increase Font Size"><i data-feather="plus"></i></button>
+                        <button id="notepad-decrease-font-btn" class="notepad-tool-btn" title="Decrease Font Size"><i data-feather="minus"></i></button>
+                        <label for="notepad-text-color-picker" class="notepad-tool-btn" title="Text Color">
+                            <i data-feather="droplet"></i>
+                            <input type="color" id="notepad-text-color-picker" value="#2c3e50">
+                        </label>
+                        <label for="notepad-highlight-color-picker" class="notepad-tool-btn" title="Highlight Color">
+                            <i data-feather="edit-3"></i>
+                            <input type="color" id="notepad-highlight-color-picker" value="#f39c12">
+                        </label>
+                        <button id="notepad-clear-format-btn" class="notepad-tool-btn" title="Clear All Content"><i data-feather="trash-2"></i></button>
+                        <span id="notepad-save-status" style="margin-left: auto; font-size: 0.8rem; color: var(--text-secondary); opacity: 0; transition: opacity 0.5s ease-in-out;"></span>
+                    </div>
+                    <div id="notepadEditor" contenteditable="true"></div>
+                </div>
+            </section>
+
+            <!-- About section removed from its own tab -->
+
+        </main>
+        <footer class="app-footer">
+            <p>Powered by Arun</p>
+        </footer>
+    </div>
+
+    <div id="notificationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeNotificationModal">&times;</span>
+            <h3 id="notificationTitle"></h3>
+            <p id="notificationMessage"></p>
         </div>
+    </div>
 
-        <div class="card">
-          <h3>Transactions</h3>
-          <div class="empty-state">
-            <p>No transactions yet.</p>
-          </div>
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeConfirmationModal">&times;</span>
+            <h3 id="confirmModalTitle">Confirm Action</h3>
+            <p id="confirmModalMessage"></p>
+            <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:15px;">
+                <button id="confirmModalConfirmBtn" class="btn btn-primary">Yes</button>
+                <button id="confirmModalCancelBtn" class="btn btn-secondary">Cancel</button>
+            </div>
         </div>
-      </section>
+    </div>
 
-      <!-- Incomes Page -->
-      <section id="incomes" class="tab-content">
-        <h2>Incomes</h2>
-
-        <div class="card">
-          <h3>Add Income</h3>
-          <form onsubmit="return false;">
-            <label>Source</label>
-            <input type="text" placeholder="Paycheck" />
-
-            <label>Amount</label>
-            <input type="number" placeholder="0.00" />
-
-            <button class="btn">Add Income</button>
-          </form>
+    <div id="geminiTipsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeGeminiTipsModal">&times;</span>
+            <h3>Financial Insights ✨</h3>
+            <ul id="geminiTipsList">
+                </ul>
         </div>
+    </div>
 
-        <div class="card">
-          <h3>Income History</h3>
-          <div class="empty-state">No income added yet.</div>
+    <div id="savingsTipsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeSavingsTipsModal">&times;</span>
+            <h3>Savings Strategies ✨</h3>
+            <ul id="savingsTipsList">
+                </ul>
         </div>
-      </section>
+    </div>
 
-      <!-- Expenses Page -->
-      <section id="expenses" class="tab-content">
-        <h2>Expenses</h2>
-
-        <div class="card">
-          <h3>Add Expense</h3>
-          <form onsubmit="return false;">
-            <label>Amount</label>
-            <input type="number" placeholder="0.00" />
-
-            <label>Comment</label>
-            <input type="text" placeholder="Groceries" />
-
-            <button class="btn">Add Expense</button>
-          </form>
+    <div id="goalPlannerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeGoalPlannerModal">&times;</span>
+            <h3>Financial Goal Planner ✨</h3>
+            <div class="form-group">
+                <label for="goalInput">Describe your financial goal:</label>
+                <textarea id="goalInput" rows="4" placeholder="e.g., Save ₹5,00,000 for a house down payment in 5 years, Pay off ₹1,00,000 credit card debt in 2 years."></textarea>
+            </div>
+            <button id="generateGoalPlanBtn" class="btn btn-primary btn-block"><i data-feather="zap"></i> Generate Plan</button>
+            <div id="goalPlanOutput" class="list-container" style="margin-top:1.5rem;">
+                <div class="empty-state"><i data-feather="lightbulb"></i>
+                    <p>Enter your goal above to get a personalized plan.</p>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <div class="card">
-          <h3>Recent Expenses</h3>
-          <div class="empty-state">No expenses yet.</div>
+    <!-- NEW: Spending Analysis Modal -->
+    <div id="spendingAnalysisModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeSpendingAnalysisModal">&times;</span>
+            <h3>Spending Habits Analysis ✨</h3>
+            <div id="spendingAnalysisOutput" class="list-container">
+                <div class="empty-state"><i data-feather="bar-chart"></i>
+                    <p>Your spending analysis will appear here.</p>
+                </div>
+            </div>
         </div>
-      </section>
+    </div>
 
-    </main>
-  </div>
+    <div id="notificationBar" class="notification-bar"></div>
 
-  <script src="App/Assets/Script.js"></script>
+    
+
+
+
+
+    <script src="script.js"></script>
 </body>
 </html>
